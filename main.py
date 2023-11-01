@@ -32,9 +32,11 @@ else:
     code = result['code']
     print("[+] Captcha Code : ",code)
     captcha_input_container = driver.find_element(By.ID,"solution")
+    captcha_input_container.click()
     for i in range(len(str(code))):
         # captcha_input_container.send_keys(code)
         captcha_input_container.send_keys(code[i])
+        time.sleep(0.3)
     time.sleep(1.2)
     driver.find_element(By.XPATH,"//div[@id='challenge-container']//button").click()
 time.sleep(22222)
