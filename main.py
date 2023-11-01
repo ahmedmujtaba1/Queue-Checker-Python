@@ -12,6 +12,6 @@ chrome_options.add_argument('--disable-gpu')
 chrome_options.add_argument('--disable-infobars')
 
 url = 'https://dfentertainment.queue-it.net/softblock/?c=dfentertainment&e=redhotconcertweek&cid=es-CL&rticr=0'
-driver = uc.Chrome(options=chrome_options)
+driver = uc.Chrome(options=chrome_options, version_main=118)
 driver.get(url)
 time.sleep(22222)
