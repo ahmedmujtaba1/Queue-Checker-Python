@@ -27,4 +27,8 @@ try:
     result = solver.normal('captchas/captcha.png')
 except Exception as ex:
     print("Error : ", ex)
+
+else: 
+    code = result['code']
+    print(code)
 time.sleep(22222)
