@@ -6,8 +6,8 @@ from selenium.webdriver.chrome.service import Service
 # A package to have a chromedriver always up-to-date.
 from webdriver_manager.chrome import ChromeDriverManager
 
-USERNAME = "your_username"
-PASSWORD = "your_password"
+USERNAME = ""
+PASSWORD = ""
 ENDPOINT = "pr.oxylabs.io:7777"
 
 
@@ -15,7 +15,7 @@ def chrome_proxy(user: str, password: str, endpoint: str) -> dict:
     wire_options = {
         "proxy": {
             "http": f"http://{user}:{password}@{endpoint}",
-            "https": f"http://{user}:{password}@{endpoint}",
+            "https": f"https://customer-themostpolenta-sessid-0637001499-sesstime-10:FiverPass2@pr.oxylabs.io:7777",
         }
     }
 
@@ -23,18 +23,17 @@ def chrome_proxy(user: str, password: str, endpoint: str) -> dict:
 
 
 def get_ip_via_chrome():
-    manage_driver = Service(executable_path=ChromeDriverManager().install())
-    options = webdriver.ChromeOptions()
-    options.headless = True
+    coptions = webdriver.ChromeOptions()
+    coptions.headless = True
     proxies = chrome_proxy(USERNAME, PASSWORD, ENDPOINT)
-    driver = webdriver.Chrome(
-        service=manage_driver, options=options, seleniumwire_options=proxies
-    )
+    driver = webdriver.Chrome(ChromeDriverManager().install(), options=coptions, seleniumwire_options=proxies)
     try:
-        driver.get("https://ip.oxylabs.io/")
-        return f'\nYour IP is: {re.search(r"[0-9].{2,}", driver.page_source).group()}'
+        driver.get("https://ip.oxylobs.io/")
+        return driver.page_source
     finally:
         driver.quit()
+
+print(get_ip_via_chrome())
 
 
 if __name__ == "__main__":
