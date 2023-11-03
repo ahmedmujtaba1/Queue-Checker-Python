@@ -5,6 +5,7 @@
 ### Python ###
 # Byte-compiled / optimized / DLL files
 __pycache__/
+proxy/
 *.py[cod]
 *$py.class
 setup.ini
