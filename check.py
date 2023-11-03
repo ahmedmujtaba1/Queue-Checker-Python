@@ -44,6 +44,7 @@ import time
 
 
 chrome_options = webdriver.ChromeOptions()
+chrome_options.add_argument('')
 # chrome_options.add_argument(f'--proxy-server={proxy_ip_port}')
 driver = webdriver.Chrome(options=chrome_options)
 
