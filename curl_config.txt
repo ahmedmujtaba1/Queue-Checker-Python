@@ -1,2 +1,0 @@
---proxy http://customer-themostpolenta:FiverPass1@pr.oxylabs.io:7777
-https://ip.oxylabs.io

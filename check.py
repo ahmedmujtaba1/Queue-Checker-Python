@@ -3,8 +3,7 @@ import random
 username = 'themostpolenta'
 password = 'FiverPass1'
 country = 'DE'
-entry = ('http://customer-%s:%s@pr.oxylabs.io:7777' %
-    (username, password))
+entry = "http://customer-themostpolenta-sessid-0457818374-sesstime-10:FiverPass1@pr.oxylabs.io:7777"
 query = urllib.request.ProxyHandler({
     'http': entry,
     'https': entry,
