@@ -44,7 +44,8 @@ import time
 
 
 chrome_options = webdriver.ChromeOptions()
-chrome_options.add_argument('')
+file_path = r"B:\Ahmed'sCode\Fiverr\0rder 6\proxy"
+chrome_options.add_argument(f'--load-extension={file_path}')
 # chrome_options.add_argument(f'--proxy-server={proxy_ip_port}')
 driver = webdriver.Chrome(options=chrome_options)
 
