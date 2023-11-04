@@ -63,6 +63,7 @@ def execute_driver():
             wait = WebDriverWait(driver, 5)
             config = configparser.ConfigParser()
             config.read('setup.ini')
+            
             two_captcha_api = config.get("admin","2captcha_api_key")
             captcha_image = wait.until(EC.presence_of_element_located((By.XPATH,"//img[@class='captcha-code']")))
             captcha_image.screenshot('captchas/captcha.png')
