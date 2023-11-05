@@ -77,12 +77,12 @@ def execute_driver():
                 code = result['code']
                 print("[+] Captcha Code : ",code)
                 captcha_input_container = driver.find_element(By.ID,"solution")
-                captcha_input_container.click()
+                # captcha_input_container.click()
                 # captcha_input_container.send_keys(code)
-                for i in range(len(str(code))):
-                    # captcha_input_container.send_keys(code)
-                    captcha_input_container.send_keys(code[i].lower())
-                    time.sleep(0.2)
+                # for i in range(len(str(code))):
+                captcha_input_container.send_keys(code)
+                    # captcha_input_container.send_keys(code[i].lower())
+                    # time.sleep(0.2)
                 captcha_input_container.send_keys(Keys.ENTER)
                 time.sleep(1.2)
                 # time.sleep(22222)
