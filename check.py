@@ -113,7 +113,7 @@ def execute_driver():
                         print("Token URL : ", current_url, " Estimated Time : ", time2, ' Queue Identificator : ', queue_identificator)
                         with open('output/output.csv', 'a', encoding="utf-8") as f:
                             writer = csv.writer(f)
-                            writer.writerows([current_url, queue_identificator, time2])
+                            writer.writerow([current_url, queue_identificator, time2])
                         flag = False
                         break
     finally:
