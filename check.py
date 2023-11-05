@@ -65,10 +65,14 @@ def execute_driver(run_time: int):
                 two_captcha_api = config.get("admin","2captcha_api_key")
                 captcha_image = wait.until(EC.presence_of_element_located((By.XPATH,"//img[@class='captcha-code']")))
                 captcha_image.screenshot('captchas/captcha.png')
-                # driver.find_element(By.ID,"playAudio").click()
                 driver.find_element(By.TAG_NAME,'body').send_keys(Keys.ARROW_DOWN)
                 driver.find_element(By.TAG_NAME,'body').send_keys(Keys.ARROW_DOWN)
                 time.sleep(0.2)
+                try:
+                    button_location = pyautogui.locateOnScreen('img/button.png')
+                    button_exact_location = pyautogui.center(button_location)
+                    pyautogui.moveTo(button_exact_location)
+                except:pass
                 solver = TwoCaptcha(apiKey=two_captcha_api)
                 try:
                     result = solver.normal('captchas/captcha.png')
@@ -79,16 +83,10 @@ def execute_driver(run_time: int):
                     code = result['code']
                     print("[+] Captcha Code : ",code)
                     captcha_input_container = driver.find_element(By.ID,"solution")
-                    [captcha_input_container.send_keys(char) for char in str(code).lower()]
-                    try:
-                        button_location = pyautogui.locateOnScreen('img/button.png')
-                        button_exact_location = pyautogui.center(button_location)
-                        pyautogui.moveTo(button_exact_location)
-                        pyautogui.click()
-                    except:
-                        pyautogui.click()
+                    # [captcha_input_container.send_keys(char) for char in str(code).lower()]
+                    captcha_input_container.send_keys(code)
                     time.sleep(0.2)
-                    # captcha_input_container.send_keys(Keys.ENTER)
+                    captcha_input_container.send_keys(Keys.ENTER)
                     time.sleep(1.2)
                     element_exist = True
                     try:
