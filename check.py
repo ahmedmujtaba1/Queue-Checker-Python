@@ -68,11 +68,11 @@ def execute_driver(run_time: int):
                 driver.find_element(By.TAG_NAME,'body').send_keys(Keys.ARROW_DOWN)
                 driver.find_element(By.TAG_NAME,'body').send_keys(Keys.ARROW_DOWN)
                 time.sleep(0.2)
-                try:
-                    button_location = pyautogui.locateOnScreen('img/button.png')
-                    button_exact_location = pyautogui.center(button_location)
-                    pyautogui.moveTo(button_exact_location)
-                except:pass
+                # try:
+                #     button_location = pyautogui.locateOnScreen('img/button.png')
+                #     button_exact_location = pyautogui.center(button_location)
+                #     pyautogui.moveTo(button_exact_location)
+                # except:pass
                 solver = TwoCaptcha(apiKey=two_captcha_api)
                 try:
                     result = solver.normal('captchas/captcha.png')
@@ -96,11 +96,20 @@ def execute_driver(run_time: int):
                         element_exist = False
                     if not element_exist:
                         wait.until(EC.presence_of_element_located((By.ID,"MainPart_divProgressbar")))
-                        time.sleep(3)
-                        wait.until(EC.presence_of_element_located((By.XPATH,"//span[text()='RED HOT CHILI PEPPERS']")))
+                        time.sleep(4)
+                        wait = WebDriverWait(driver, 25)
+                        time2 = wait.until(EC.presence_of_element_located((By.ID,"MainPart_lbLastUpdateTimeText"))).text
+                        time.sleep(1)
+                        flag2 = True
+                        while flag2:
+                            try:
+                                wait.until(EC.presence_of_element_located((By.XPATH,"//span[text()='RED HOT CHILI PEPPERS']")))
+                                break
+                            except:
+                                time.sleep(1)
                         time.sleep(0.4)
                         current_url = driver.current_url
-                        print("Token URL : ", current_url)
+                        print("Token URL : ", current_url, " Estimated Time : ", time2)
                         driver.get(url)
                         flag = False
                         break
