@@ -96,7 +96,7 @@ def execute_driver(run_time: int):
                         element_exist = False
                     if not element_exist:
                         wait.until(EC.presence_of_element_located((By.ID,"MainPart_divProgressbar")))
-                        time.sleep(0.4)
+                        time.sleep(3)
                         wait.until(EC.presence_of_element_located((By.XPATH,"//span[text()='RED HOT CHILI PEPPERS']")))
                         time.sleep(0.4)
                         current_url = driver.current_url
