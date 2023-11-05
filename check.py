@@ -51,6 +51,7 @@ def execute_driver():
     user_agent = "Mozilla/5.0 (iPhone; CPU iPhone OS 16_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/114.0.5735.99 Mobile/15E148 Safari/604.1"
     chrome_options.add_argument(f'user-agent={user_agent}')
     driver = webdriver.Chrome(options=chrome_options)
+    driver.maximize_window()
     try:
         url = 'https://dfentertainment.queue-it.net/softblock/?c=dfentertainment&e=redhotconcertweek&cid=es-CL&rticr=0'
         driver.get(url)
