@@ -42,7 +42,7 @@ def chrome_proxy(user: str, password: str, endpoint: str) -> dict:
     return wire_options
 
 
-def execute_driver():
+def execute_driver(run_time: int):
     options = webdriver.ChromeOptions()
     options.headless = True
     proxies = chrome_proxy(USERNAME, PASSWORD, ENDPOINT)
@@ -55,34 +55,39 @@ def execute_driver():
     try:
         url = 'https://dfentertainment.queue-it.net/softblock/?c=dfentertainment&e=redhotconcertweek&cid=es-CL&rticr=0'
         driver.get(url)
-        for i in range(12):
-            time.sleep(2)
-            wait = WebDriverWait(driver, 5)
-            config = configparser.ConfigParser()
-            config.read('setup.ini')
-            two_captcha_api = config.get("admin","2captcha_api_key")
-            captcha_image = wait.until(EC.presence_of_element_located((By.XPATH,"//img[@class='captcha-code']")))
-            captcha_image.screenshot('captchas/captcha.png')
-            # driver.find_element(By.ID,"playAudio").click()
-            solver = TwoCaptcha(apiKey=two_captcha_api)
-            try:
-                result = solver.normal('captchas/captcha.png')
-            except Exception as ex:
-                print("Error : ", ex)
-
-            else: 
-                code = result['code']
-                print("[+] Captcha Code : ",code)
-                captcha_input_container = driver.find_element(By.ID,"solution")
-                captcha_input_container.send_keys(code)
-                button_location = pyautogui.locateOnScreen('img/button.png')
-                button_exact_location = pyautogui.center(button_location)
-                # print(button_exact_location)
-                pyautogui.moveTo(button_exact_location)
+        for i in range(run_time):
+            flag = True
+            while flag:
+                time.sleep(2)
+                wait = WebDriverWait(driver, 5)
+                config = configparser.ConfigParser()
+                config.read('setup.ini')
+                two_captcha_api = config.get("admin","2captcha_api_key")
+                captcha_image = wait.until(EC.presence_of_element_located((By.XPATH,"//img[@class='captcha-code']")))
+                captcha_image.screenshot('captchas/captcha.png')
+                # driver.find_element(By.ID,"playAudio").click()
+                driver.find_element(By.TAG_NAME,'body').send_keys(Keys.ARROW_DOWN)
+                driver.find_element(By.TAG_NAME,'body').send_keys(Keys.ARROW_DOWN)
                 time.sleep(0.2)
-                captcha_input_container.send_keys(Keys.ENTER)
-                time.sleep(1.2)
-                # time.sleep(22222)
+                solver = TwoCaptcha(apiKey=two_captcha_api)
+                try:
+                    result = solver.normal('captchas/captcha.png')
+                except Exception as ex:
+                    print("Error : ", ex)
+
+                else: 
+                    code = result['code']
+                    print("[+] Captcha Code : ",code)
+                    captcha_input_container = driver.find_element(By.ID,"solution")
+                    captcha_input_container.send_keys(code)
+                    try:
+                        button_location = pyautogui.locateOnScreen('img/button.png')
+                        button_exact_location = pyautogui.center(button_location)
+                        pyautogui.moveTo(button_exact_location)
+                    except:pass
+                    time.sleep(0.2)
+                    captcha_input_container.send_keys(Keys.ENTER)
+                    time.sleep(1.2)
     finally:
         driver.quit()
 
