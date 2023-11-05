@@ -90,7 +90,13 @@ def execute_driver(run_time: int):
                     time.sleep(0.2)
                     # captcha_input_container.send_keys(Keys.ENTER)
                     time.sleep(1.2)
-                    if not driver.find_element(By.XPATH,"//div[@class='hidden']"):
+                    element_exist = True
+                    try:
+                        driver.find_element(By.XPATH,"//div[@class='hidden']")
+                        element_exist = True
+                    except:
+                        element_exist = False
+                    if not element_exist:
                         flag = False
                         break
                     # time.sleep(22222)
