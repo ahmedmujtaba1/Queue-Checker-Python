@@ -36,6 +36,7 @@ def execute_driver(run_time: int):
     chrome_options = webdriver.ChromeOptions()
     user_agent = "Mozilla/5.0 (iPhone; CPU iPhone OS 16_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/114.0.5735.99 Mobile/15E148 Safari/604.1"
     chrome_options.add_argument(f'user-agent={user_agent}')
+    chrome_options.add_argument(f'--headless')
     driver = webdriver.Chrome(options=chrome_options)
     driver.maximize_window()
     try:
@@ -88,10 +89,11 @@ def execute_driver(run_time: int):
                                 time.sleep(1)
                         time.sleep(0.4)
                         current_url = driver.current_url
-                        print("Token URL : ", current_url, " Estimated Time : ", time2)
+                        queue_identificator = current_url.split('&')[0].split('=')[1]
+                        print("Token URL : ", current_url, " Estimated Time : ", time2, ' Queue Identificator : ', queue_identificator)
                         with open('output/output.csv', 'a', encoding="utf-8") as f:
                             writer = csv.writer(f)
-                            writer.writerow(['URL', 'Identifacador de fila', 'última actualización'])
+                            writer.writerow([current_url, queue_identificator, time2])
                         flag = False
                         break
                     # time.sleep(22222)
