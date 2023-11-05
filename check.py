@@ -78,7 +78,7 @@ def execute_driver(run_time: int):
                         wait.until(EC.presence_of_element_located((By.ID,"MainPart_divProgressbar")))
                         time.sleep(4)
                         wait = WebDriverWait(driver, 25)
-                        time2 = driver.find_element(By.ID,"MainPart_lbLastUpdateTimeText").text
+                        time2 = driver.find_element(By.ID,"MainPart_lbWhichIsIn").text
                         time.sleep(1)
                         flag2 = True
                         while flag2:
@@ -93,7 +93,7 @@ def execute_driver(run_time: int):
                         print("Token URL : ", current_url, " Estimated Time : ", time2, ' Queue Identificator : ', queue_identificator)
                         with open('output/output.csv', 'a', encoding="utf-8") as f:
                             writer = csv.writer(f)
-                            writer.writerow([current_url, queue_identificator, time2])
+                            writer.writerows([current_url, queue_identificator, time2])
                         flag = False
                         break
                     # time.sleep(22222)
@@ -103,4 +103,5 @@ def execute_driver(run_time: int):
 
 if __name__ == "__main__":
     run = int(input("[+] How many times you want to run the bot : "))
-    print(execute_driver(run))
+    for i in range(run):
+        print(execute_driver(run))
