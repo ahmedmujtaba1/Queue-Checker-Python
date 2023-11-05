@@ -98,7 +98,7 @@ def execute_driver(run_time: int):
                         wait.until(EC.presence_of_element_located((By.ID,"MainPart_divProgressbar")))
                         time.sleep(4)
                         wait = WebDriverWait(driver, 25)
-                        time2 = wait.until(EC.presence_of_element_located((By.ID,"MainPart_lbLastUpdateTimeText"))).text
+                        time2 = driver.find_element(By.ID,"MainPart_lbLastUpdateTimeText").text
                         time.sleep(1)
                         flag2 = True
                         while flag2:
