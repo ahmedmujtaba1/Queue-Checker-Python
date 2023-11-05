@@ -75,6 +75,8 @@ def execute_driver():
                 print("[+] Captcha Code : ",code)
                 captcha_input_container = driver.find_element(By.ID,"solution")
                 captcha_input_container.send_keys(code)
+                pyautogui.locateOnScreen('img/button.jpg')
+                time.sleep(0.2)
                 captcha_input_container.send_keys(Keys.ENTER)
                 time.sleep(1.2)
                 # time.sleep(22222)
