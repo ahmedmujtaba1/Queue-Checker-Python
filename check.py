@@ -79,18 +79,25 @@ def execute_driver(run_time: int):
                     code = result['code']
                     print("[+] Captcha Code : ",code)
                     captcha_input_container = driver.find_element(By.ID,"solution")
-                    captcha_input_container.send_keys(code)
+                    [captcha_input_container.send_keys(char) for char in str(code).lower()]
                     try:
                         button_location = pyautogui.locateOnScreen('img/button.png')
                         button_exact_location = pyautogui.center(button_location)
                         pyautogui.moveTo(button_exact_location)
-                    except:pass
+                        pyautogui.click()
+                    except:
+                        pyautogui.click()
                     time.sleep(0.2)
-                    captcha_input_container.send_keys(Keys.ENTER)
+                    # captcha_input_container.send_keys(Keys.ENTER)
                     time.sleep(1.2)
+                    if not driver.find_element(By.XPATH,"//div[@class='hidden']"):
+                        flag = False
+                        break
+                    time.sleep(22222)
     finally:
         driver.quit()
 
 
 if __name__ == "__main__":
-    print(execute_driver())
+    run = int(input("[+] How many times you want to run the bot : "))
+    print(execute_driver(run))
