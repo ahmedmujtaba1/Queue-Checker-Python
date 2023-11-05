@@ -95,6 +95,13 @@ def execute_driver(run_time: int):
                     except:
                         element_exist = False
                     if not element_exist:
+                        wait.until(EC.presence_of_element_located((By.ID,"MainPart_divProgressbar")))
+                        time.sleep(0.4)
+                        wait.until(EC.presence_of_element_located((By.XPATH,"//span[text()='RED HOT CHILI PEPPERS']")))
+                        time.sleep(0.4)
+                        current_url = driver.current_url
+                        print("Token URL : ", current_url)
+                        driver.get(url)
                         flag = False
                         break
                     # time.sleep(22222)
