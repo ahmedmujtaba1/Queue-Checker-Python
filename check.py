@@ -1,3 +1,7 @@
+# ______________________________ MODULES ___________________________________
+
+# Make sure install all modules using pip. 
+
 from selenium.webdriver.common.by import By
 from seleniumwire import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
@@ -9,14 +13,27 @@ from selenium.webdriver.common.keys import Keys
 from twocaptcha import TwoCaptcha
 import configparser, time, csv
 
-USERNAME = "themostpolenta"
-PASSWORD = "FiverPass1"
+
+### ______________________________ INIT _____________________________________
+
+config = configparser.ConfigParser()
+config.read('setup.ini')
+two_captcha_api = config.get("admin","2captcha_api_key")
+solver = TwoCaptcha(apiKey=two_captcha_api)
+USERNAME = config.get("admin","USERNAME")
+PASSWORD = config.get("admin","PASSWORD")
 ENDPOINT = "pr.oxylabs.io:7777"
 
+## _______________________________ BOT _____________________________________
+
+
+#Saving in csv outline
 with open('output/output.csv', 'w', encoding="utf-8") as f:
     writer = csv.writer(f)
     writer.writerow(['URL', 'Identifacador de fila', 'última actualización'])
 
+
+#Connecting to proxy
 def chrome_proxy(user: str, password: str, endpoint: str) -> dict:
     wire_options = {
         "proxy": {
@@ -27,34 +44,37 @@ def chrome_proxy(user: str, password: str, endpoint: str) -> dict:
 
     return wire_options
 
-
-def execute_driver(run_time: int):
+#main function
+def execute_driver():
     options = webdriver.ChromeOptions()
     options.headless = True
     proxies = chrome_proxy(USERNAME, PASSWORD, ENDPOINT)
-    # driver = webdriver.Chrome( seleniumwire_options=proxies)
+
+    #Defining Chrome Options
     chrome_options = webdriver.ChromeOptions()
+
+    # User Agent
     user_agent = "Mozilla/5.0 (iPhone; CPU iPhone OS 16_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/114.0.5735.99 Mobile/15E148 Safari/604.1"
     chrome_options.add_argument(f'user-agent={user_agent}')
+
+    # Opening it headless
     chrome_options.add_argument(f'--headless')
     driver = webdriver.Chrome(options=chrome_options)
+    # driver = webdriver.Chrome(options=chrome_options, seleniumwire_options=proxies)
     driver.maximize_window()
     try:
+        # MAIN URL 
         url = 'https://dfentertainment.queue-it.net/softblock/?c=dfentertainment&e=redhotconcertweek&cid=es-CL&rticr=0'
         driver.get(url)
         flag = True
         while flag:
                 time.sleep(2)
                 wait = WebDriverWait(driver, 5)
-                config = configparser.ConfigParser()
-                config.read('setup.ini')
-                two_captcha_api = config.get("admin","2captcha_api_key")
                 captcha_image = wait.until(EC.presence_of_element_located((By.XPATH,"//img[@class='captcha-code']")))
                 captcha_image.screenshot('captchas/captcha.png')
                 driver.find_element(By.TAG_NAME,'body').send_keys(Keys.ARROW_DOWN)
                 driver.find_element(By.TAG_NAME,'body').send_keys(Keys.ARROW_DOWN)
                 time.sleep(0.2)
-                solver = TwoCaptcha(apiKey=two_captcha_api)
                 try:
                     result = solver.normal('captchas/captcha.png')
                 except Exception as ex:
@@ -96,12 +116,21 @@ def execute_driver(run_time: int):
                             writer.writerows([current_url, queue_identificator, time2])
                         flag = False
                         break
-                    # time.sleep(22222)
     finally:
         driver.quit()
 
+# _____________________________ BOT END _________________________________
+
+# _____________________________ RUNING IT _______________________________
 
 if __name__ == "__main__":
-    run = int(input("[+] How many times you want to run the bot : "))
+    print("________ HELLO ! Hope you are well. ______________________")
+    run = int(input("[+] ________________ How many times you want to run the bot : ____________"))
     for i in range(run):
-        print(execute_driver(run))
+        print(execute_driver())
+
+    print('[-] ____________________________ THANK YOU ________________________________')
+    print('[-] ____________________________ BYE ________________________________')
+
+# ____________________________ THANK YOU ________________________________
+# ____________________________ BYE  _____________________________________
