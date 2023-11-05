@@ -66,7 +66,7 @@ def execute_driver():
             two_captcha_api = config.get("admin","2captcha_api_key")
             captcha_image = wait.until(EC.presence_of_element_located((By.XPATH,"//img[@class='captcha-code']")))
             captcha_image.screenshot('captchas/captcha.png')
-            driver.find_element(By.ID,"playAudio").click()
+            # driver.find_element(By.ID,"playAudio").click()
             solver = TwoCaptcha(apiKey=two_captcha_api)
             try:
                 result = solver.normal('captchas/captcha.png')
