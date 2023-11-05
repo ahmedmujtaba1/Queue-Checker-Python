@@ -93,7 +93,7 @@ def execute_driver(run_time: int):
                     if not driver.find_element(By.XPATH,"//div[@class='hidden']"):
                         flag = False
                         break
-                    time.sleep(22222)
+                    # time.sleep(22222)
     finally:
         driver.quit()
 
