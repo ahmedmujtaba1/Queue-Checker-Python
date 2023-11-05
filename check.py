@@ -1,22 +1,5 @@
-
-# username = 'themostpolenta'
-# password = 'FiverPass1'
-# country = 'DE'
-# entry = ('https://customer-%s-cc-%s:%s@pr.oxylabs.io:7777' %
-#     (username, country, password))
-# query = urllib.request.ProxyHandler({
-#     'http': entry,
-#     'https': entry,
-# })
-# execute = urllib.request.build_opener(query)
-# ip_address = execute.open(' https://ipinfo.io').read()
-# ip_address = str(ip_address).split(',')[0]
-# ip_address = str(ip_address).split('"')[3]
-# print("Ip Address : ", ip_address)
-
 from selenium.webdriver.common.by import By
 from seleniumwire import webdriver
-# A package to have a chromedriver always up-to-date.
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
@@ -24,12 +7,15 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
 from twocaptcha import TwoCaptcha
-import configparser, time, pyautogui
+import configparser, time, csv
 
 USERNAME = "themostpolenta"
 PASSWORD = "FiverPass1"
 ENDPOINT = "pr.oxylabs.io:7777"
 
+with open('output/output.csv', 'w', encoding="utf-8") as f:
+    writer = csv.writer(f)
+    writer.writerow(['URL', 'Identifacador de fila', 'última actualización'])
 
 def chrome_proxy(user: str, password: str, endpoint: str) -> dict:
     wire_options = {
@@ -55,9 +41,8 @@ def execute_driver(run_time: int):
     try:
         url = 'https://dfentertainment.queue-it.net/softblock/?c=dfentertainment&e=redhotconcertweek&cid=es-CL&rticr=0'
         driver.get(url)
-        for i in range(run_time):
-            flag = True
-            while flag:
+        flag = True
+        while flag:
                 time.sleep(2)
                 wait = WebDriverWait(driver, 5)
                 config = configparser.ConfigParser()
@@ -68,11 +53,6 @@ def execute_driver(run_time: int):
                 driver.find_element(By.TAG_NAME,'body').send_keys(Keys.ARROW_DOWN)
                 driver.find_element(By.TAG_NAME,'body').send_keys(Keys.ARROW_DOWN)
                 time.sleep(0.2)
-                # try:
-                #     button_location = pyautogui.locateOnScreen('img/button.png')
-                #     button_exact_location = pyautogui.center(button_location)
-                #     pyautogui.moveTo(button_exact_location)
-                # except:pass
                 solver = TwoCaptcha(apiKey=two_captcha_api)
                 try:
                     result = solver.normal('captchas/captcha.png')
@@ -83,7 +63,6 @@ def execute_driver(run_time: int):
                     code = result['code']
                     print("[+] Captcha Code : ",code)
                     captcha_input_container = driver.find_element(By.ID,"solution")
-                    # [captcha_input_container.send_keys(char) for char in str(code).lower()]
                     captcha_input_container.send_keys(code)
                     time.sleep(0.2)
                     captcha_input_container.send_keys(Keys.ENTER)
@@ -110,7 +89,9 @@ def execute_driver(run_time: int):
                         time.sleep(0.4)
                         current_url = driver.current_url
                         print("Token URL : ", current_url, " Estimated Time : ", time2)
-                        driver.get(url)
+                        with open('output/output.csv', 'a', encoding="utf-8") as f:
+                            writer = csv.writer(f)
+                            writer.writerow(['URL', 'Identifacador de fila', 'última actualización'])
                         flag = False
                         break
                     # time.sleep(22222)
