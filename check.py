@@ -58,9 +58,9 @@ def execute_driver():
     chrome_options.add_argument(f'user-agent={user_agent}')
 
     # Opening it headless
-    chrome_options.add_argument(f'--headless')
-    # driver = webdriver.Chrome(options=chrome_options)
-    driver = webdriver.Chrome(options=chrome_options, seleniumwire_options=proxies)
+    # chrome_options.add_argument(f'--headless')
+    # driver = webdriver.Chrome(options=chrome_options, seleniumwire_options=proxies)
+    driver = webdriver.Chrome(options=chrome_options)
     driver.maximize_window()
     try:
         # MAIN URL 
@@ -130,7 +130,7 @@ if __name__ == "__main__":
     print("________ HELLO ! Hope you are well. ______________________")
     run = int(input("[+] ________________ How many times you want to run the bot : ____________"))
     for i in range(run):
-        print(execute_driver())
+        execute_driver()
 
     print('[-] ____________________________ THANK YOU ________________________________')
     print('[-] ____________________________ BYE ________________________________')
