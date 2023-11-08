@@ -64,7 +64,8 @@ def execute_driver():
     driver.maximize_window()
     try:
         # MAIN URL 
-        url = 'https://dfentertainment.queue-it.net/softblock/?c=dfentertainment&e=redhotconcertweek&cid=es-CL&rticr=0'
+        # url = 'https://dfentertainment.queue-it.net/softblock/?c=dfentertainment&e=redhotconcertweek&cid=es-CL&rticr=0'
+        url = 'https://dfentertainment.queue-it.net/?c=dfentertainment&e=lollalup240943&cid=es-CL'
         driver.get(url)
         flag = True
         while flag:
@@ -84,6 +85,7 @@ def execute_driver():
                     code = result['code']
                     print("[+] Captcha Code : ",code)
                     captcha_input_container = driver.find_element(By.ID,"solution")
+                    captcha_input_container.clear()
                     captcha_input_container.send_keys(code)
                     time.sleep(0.2)
                     captcha_input_container.send_keys(Keys.ENTER)
@@ -99,17 +101,18 @@ def execute_driver():
                         time.sleep(4)
                         wait = WebDriverWait(driver, 25)
                         time2 = driver.find_element(By.ID,"MainPart_lbWhichIsIn").text
+                        queue_identificator = driver.find_element(By.ID,"hlLinkToQueueTicket2").text
                         time.sleep(1)
                         flag2 = True
                         while flag2:
                             try:
-                                wait.until(EC.presence_of_element_located((By.XPATH,"//span[text()='RED HOT CHILI PEPPERS']")))
-                                break
-                            except:
+                                wait.until(EC.presence_of_element_located((By.ID,"MainPart_divProgressbar")))
                                 time.sleep(1)
-                        time.sleep(0.4)
+                            except:
+                                break
+                        time.sleep(3)
                         current_url = driver.current_url
-                        queue_identificator = current_url.split('&')[0].split('=')[1]
+                        # queue_identificator = current_url.split('&')[0].split('=')[1]
                         print("Token URL : ", current_url, " Estimated Time : ", time2, ' Queue Identificator : ', queue_identificator)
                         with open('output/output.csv', 'a', encoding="utf-8") as f:
                             writer = csv.writer(f)
