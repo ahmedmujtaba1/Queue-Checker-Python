@@ -58,9 +58,9 @@ def execute_driver():
     chrome_options.add_argument(f'user-agent={user_agent}')
 
     # Opening it headless
-    # chrome_options.add_argument(f'--headless')
-    # driver = webdriver.Chrome(options=chrome_options, seleniumwire_options=proxies)
-    driver = webdriver.Chrome(options=chrome_options)
+    chrome_options.add_argument(f'--headless')
+    driver = webdriver.Chrome(options=chrome_options, seleniumwire_options=proxies)
+    # driver = webdriver.Chrome(options=chrome_options)
     driver.maximize_window()
     try:
         # MAIN URL 
