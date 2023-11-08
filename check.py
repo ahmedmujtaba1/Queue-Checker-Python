@@ -114,7 +114,7 @@ def execute_driver():
                         current_url = driver.current_url
                         # queue_identificator = current_url.split('&')[0].split('=')[1]
                         print("Token URL : ", current_url, " Estimated Time : ", time2, ' Queue Identificator : ', queue_identificator)
-                        with open('output/output.csv', 'a', encoding="utf-8") as f:
+                        with open('output/output.csv', 'a', encoding="utf-8", newline='') as f:
                             writer = csv.writer(f)
                             writer.writerow([current_url, queue_identificator, time2])
                         flag = False
