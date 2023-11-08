@@ -110,7 +110,7 @@ def execute_driver():
                                 time.sleep(1)
                             except:
                                 break
-                        time.sleep(3)
+                        time.sleep(0.9)
                         current_url = driver.current_url
                         # queue_identificator = current_url.split('&')[0].split('=')[1]
                         print("Token URL : ", current_url, " Estimated Time : ", time2, ' Queue Identificator : ', queue_identificator)
