@@ -63,7 +63,7 @@ def execute_driver(total_num):
     print("[+] Opening Chrome ")
     # driver = webdriver.Chrome(options=chrome_options, seleniumwire_options=proxies)
     driver = webdriver.Chrome(options=chrome_options)
-    driver.maximize_window()
+    # driver.maximize_window()
     try:
         # MAIN URL 
         # url = 'https://dfentertainment.queue-it.net/softblock/?c=dfentertainment&e=redhotconcertweek&cid=es-CL&rticr=0'
@@ -76,9 +76,6 @@ def execute_driver(total_num):
                 wait = WebDriverWait(driver, 5)
                 captcha_image = wait.until(EC.presence_of_element_located((By.XPATH,"//img[@class='captcha-code']")))
                 captcha_image.screenshot('captchas/captcha.png')
-                # driver.find_element(By.TAG_NAME,'body').send_keys(Keys.ARROW_DOWN)
-                # driver.find_element(By.TAG_NAME,'body').send_keys(Keys.ARROW_DOWN)
-                # time.sleep(0.2)
                 try:
                     result = solver.normal('captchas/captcha.png')
                 except Exception as ex:
@@ -111,12 +108,10 @@ def execute_driver(total_num):
                         if time2 == "":
                             time2 = "menos de un minuto"
                         while flag2:
-                            try:
-                                driver.find_element(By.ID,"MainPart_divProgressbar")
-                                queue_identificator = driver.find_element(By.ID,"hlLinkToQueueTicket2").text
-                                time.sleep(0.1)
-                            except:
+                            queue_identificator = driver.find_element(By.ID,"hlLinkToQueueTicket2").text
+                            if queue_identificator != "":
                                 break
+                               
                         # time.sleep(0.9)
                         current_url = driver.current_url
                         stop_time = time.time()
