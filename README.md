@@ -15,8 +15,7 @@ To use GitHub Username Checker, follow these simple steps:
 1. **Clone this Repository**: Begin by cloning this repository to your local machine using the following command:
 
    ```bash
-   git clone https://github.com/ahmedmujtaba1/solid-username-checker.git
-
+   git clone https://github.com/ahmedmujtaba1/Queue-Checker-Python.git
 
 2. **Run the Script**: Begin by running command in `cmd` :
 
