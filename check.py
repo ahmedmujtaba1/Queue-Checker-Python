@@ -28,10 +28,10 @@ ENDPOINT = "pr.oxylabs.io:7777"
 ## _______________________________ BOT _____________________________________
 
 
-#Saving in csv outline
-with open('output/output.csv', 'w', encoding="utf-8") as f:
-    writer = csv.writer(f)
-    writer.writerow(['URL', 'Identifacador de fila', 'última actualización'])
+# #Saving in csv outline
+# with open('output/output.csv', 'w', encoding="utf-8") as f:
+#     writer = csv.writer(f)
+#     writer.writerow(['URL', 'Identifacador de fila', 'última actualización'])
 
 
 #Connecting to proxy
